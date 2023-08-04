@@ -11,12 +11,15 @@ function retornarProductoHTML(producto) {
             </div> `
 }
 
+//Activar boton agregar al carrito
+
 function activarButtonAgregar() {
     const botones = document.querySelectorAll("button.producto-agregar")
     botones.forEach((boton)=> {
         boton.addEventListener("click", ()=>{
             let producto = Productos.find((producto)=> producto.id === parseInt(boton.id))
             carritoProductos.push(producto)
+            localStorage.setItem("carritoProductos", JSON.stringify(carritoProductos))
             console.table(carritoProductos)
         })
     })
@@ -36,9 +39,9 @@ cargarProductos(Productos)
 //Buscador
 
 inputBuscar.addEventListener("search", ()=>  {
-        const resultado = Productos.filter((producto)=> producto.titulo.toLowerCase().includes(inputBuscar.value.toLowerCase()))
-        cargarProductos(resultado)
-        
+    localStorage.setItem("ultimaBusqueda", inputBuscar.value)
+    const resultado = Productos.filter((producto)=> producto.titulo.toLowerCase().includes(inputBuscar.value.toLowerCase()))
+    cargarProductos(resultado)
 })
 
 
