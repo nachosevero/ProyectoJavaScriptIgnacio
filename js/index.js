@@ -36,13 +36,7 @@ function activarButtonAgregar() {
             carritoProductos.push(producto)
             localStorage.setItem("carritoProductos", JSON.stringify(carritoProductos))
             mostrarContadorProdCarrito()
-            Swal.fire({
-                position: 'bottom-end',
-                icon: 'success',
-                title:`${producto.titulo} fue agregado al carrito.`,
-                showConfirmButton: false,
-                timer: 1000
-            })
+            toast(`✔ ${producto.titulo} fue agregado al carrito`, "coral")
         })
     })
 }
@@ -67,5 +61,18 @@ inputBuscar.addEventListener("search", ()=>  {
     cargarProductos(resultado)
 })
 
+function toast(mensaje, bgcolor) {
+    Toastify({
+        text: mensaje,
+        duration: 1800,
+        close: true,
+        gravity: "bottom", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+        background: bgcolor,
+        }
+    }).showToast();
+}
 
 

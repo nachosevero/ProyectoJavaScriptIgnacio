@@ -1,5 +1,6 @@
 const tableBody = document.querySelector("tbody")
 const secProdu = document.querySelector("div.sec-produ")
+const buttonComprar = document.querySelector("button#button-comprar")
 
 function listarProductosEnCarritoHTML(producto) {
     return `<tr>
@@ -21,3 +22,21 @@ function armarCarrito() {
                                 : secProdu.innerHTML = mostrarMensCarritoVacio()
 }
 armarCarrito()
+
+buttonComprar.addEventListener("click", ()=> {
+    Swal.fire({
+        title: '¿Deseas confirmar la compra?',
+        showDenyButton: true,
+        confirmButtonText: 'CONFIRMAR',
+        denyButtonText: `CANCELAR`,
+        }).then((result) => {
+        if (result.isConfirmed) {
+            localStorage.removeItem("carritoProductos")
+            carritoProductos.length = 0
+            Swal.fire('¡Muchas gracias por su compra!', '', 'success')
+            secProdu.innerHTML = mostrarMensCarritoVacio()
+        } else if (result.isDenied) {
+            Swal.fire('La compra ha sido cancelada', '', 'error')
+        }
+    })
+})
