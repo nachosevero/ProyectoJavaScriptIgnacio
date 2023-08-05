@@ -68,12 +68,7 @@ const Productos = [
 ]
 
 function recuperarCarrito() {
-    JSON.parse(localStorage.getItem("carritoProductos"))
-    if (localStorage.getItem("carritoProductos") !== null) {
-        return JSON.parse(localStorage.getItem("carritoProductos"))
-    } else {
-        return []
-    }
+    return JSON.parse(localStorage.getItem("carritoProductos")) || []
 }
 
 const carritoProductos = recuperarCarrito()

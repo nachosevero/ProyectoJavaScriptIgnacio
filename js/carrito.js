@@ -1,43 +1,23 @@
-const productosEnCarrito = JSON.parse(localStorage.getItem("carritoProductos"))
-console.log(productosEnCarrito)
+const tableBody = document.querySelector("tbody")
+const secProdu = document.querySelector("div.sec-produ")
 
-const contenedorCarritoVacio = document.querySelector("#carrito-vacio")
-const contenedorCarritoProductos = document.querySelector("#carrito-productos")
-const contenedorCarritoAcciones = document.querySelector("#carrito-acciones")
-const contenedorCarritoComprado = document.querySelector("#carrito-comprado")
-const botonesEliminar = document.querySelectorAll(".carrito-producto-eliminar")
-
-contenedorCarritoProductos.innerHTML = ""
-
-if (productosEnCarrito) {
-
-    contenedorCarritoVacio.classList.add("disabled")
-    contenedorCarritoProductos.classList.remove("disabled")
-    contenedorCarritoAcciones.classList.remove("disabled")
-    contenedorCarritoComprado.classList.add("disabled")
-
-    productosEnCarrito.forEach(producto => {
-
-        const div = document.createElement("div")
-        div.classList.add("carrito-producto")
-        div.innerHTML = `
-            <img class="carrito-producto-imagen" src="${producto.imagen}" alt="${producto.titulo}">
-            <div class="carrito-producto-titulo">
-                <small>Titulo</small>
-                <h3>${producto.titulo}</h3>
-            </div>
-            <div class="carrito-producto-precio">
-                <small>Precio</small>
-                <p>$${producto.precio.toLocaleString()}</p>
-            </div>
-            <button class="carrito-producto-eliminar" id="${producto.id}"><i class="bi bi-trash-fill"></i></button>
-        `
-
-        contenedorCarritoProductos.append(div)
-    })
-} else {
-    contenedorCarritoVacio.classList.add("disabled")
-    contenedorCarritoProductos.classList.remove("disabled")
-    contenedorCarritoAcciones.classList.remove("disabled")
-    contenedorCarritoComprado.classList.add("disabled")
+function listarProductosEnCarritoHTML(producto) {
+    return `<tr>
+                <td>${producto.titulo}</td>
+                <td>$${producto.precio.toLocaleString()}</td>
+                <td><button  class="eliminar-producto-carrito"><i class="bi bi-trash-fill"></i></button></td>
+            </tr>`
 }
+
+function mostrarMensCarritoVacio() {
+    return `<div class="carrito-vacio">
+                <p>El carrito está vacío. ☹</p>
+            </div>`
+}
+
+function armarCarrito() {
+    tableBody.innerHTML = ""
+    carritoProductos.length > 0 ? carritoProductos.forEach((producto)=> tableBody.innerHTML += listarProductosEnCarritoHTML(producto))
+                                : secProdu.innerHTML = mostrarMensCarritoVacio()
+}
+armarCarrito()
