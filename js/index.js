@@ -36,6 +36,13 @@ function activarButtonAgregar() {
             carritoProductos.push(producto)
             localStorage.setItem("carritoProductos", JSON.stringify(carritoProductos))
             mostrarContadorProdCarrito()
+            Swal.fire({
+                position: 'bottom-end',
+                icon: 'success',
+                title:`${producto.titulo} fue agregado al carrito.`,
+                showConfirmButton: false,
+                timer: 1000
+            })
         })
     })
 }
