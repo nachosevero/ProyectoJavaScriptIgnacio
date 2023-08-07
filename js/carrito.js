@@ -6,7 +6,7 @@ function listarProductosEnCarritoHTML(producto) {
     return `<tr>
                 <td>${producto.titulo}</td>
                 <td>$${producto.precio.toLocaleString()}</td>
-                <td><button  class="eliminar-producto-carrito"><i class="bi bi-trash-fill"></i></button></td>
+                <td id="${producto.id}" class="boton-quitar-carrito" title="Quitar del carrito">❌</td>
             </tr>`
 }
 
@@ -16,10 +16,27 @@ function mostrarMensCarritoVacio() {
             </div>`
 }
 
+function clickQuitarCarrito() {
+    const botonesQuitar = document.querySelectorAll("td.boton-quitar-carrito")
+    botonesQuitar.forEach((botonQuitar)=> {
+        botonQuitar.addEventListener("click", ()=> {
+            let id = parseInt(botonQuitar.id)
+            let indice = carritoProductos.findIndex((producto)=> producto.id === id)
+            carritoProductos.splice(indice, 1)
+            armarCarrito()
+            guardarCarritoProductos()
+        })
+    })
+}
+
 function armarCarrito() {
     tableBody.innerHTML = ""
-    carritoProductos.length > 0 ? carritoProductos.forEach((producto)=> tableBody.innerHTML += listarProductosEnCarritoHTML(producto))
-                                : secProdu.innerHTML = mostrarMensCarritoVacio()
+    if (carritoProductos.length > 0) {
+        carritoProductos.forEach((producto)=> tableBody.innerHTML += listarProductosEnCarritoHTML(producto))
+        clickQuitarCarrito()
+    } else {
+        secProdu.innerHTML = mostrarMensCarritoVacio()
+    }
 }
 armarCarrito()
 

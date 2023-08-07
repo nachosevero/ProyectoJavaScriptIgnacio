@@ -182,7 +182,7 @@ thead{
     display: flexbox;
     color: darkred;
     padding-top: 2rem;
-
-
-
+}
+.boton-quitar-carrito{
+    cursor: pointer;
 }

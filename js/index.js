@@ -2,6 +2,7 @@
 const contadorCarrito = document.querySelector("span#numerito")
 const contenedorProductos = document.querySelector("div#contenedor-productos.contenedor-productos")
 const inputBuscar = document.querySelector("input#input-buscar")
+const URL = "./js/productos.json"
 
 function mostrarContadorProdCarrito() {
     contadorCarrito.textContent = carritoProductos.length
@@ -34,7 +35,7 @@ function activarButtonAgregar() {
         boton.addEventListener("click", ()=>{
             let producto = Productos.find((producto)=> producto.id === parseInt(boton.id))
             carritoProductos.push(producto)
-            localStorage.setItem("carritoProductos", JSON.stringify(carritoProductos))
+            guardarCarritoProductos()
             mostrarContadorProdCarrito()
             toast(`✔ ${producto.titulo} fue agregado al carrito`, "coral")
         })
@@ -48,9 +49,6 @@ function cargarProductos(array) {
     array.forEach((producto)=> contenedorProductos.innerHTML += retornarProductoHTML(producto))
     activarButtonAgregar()
 }
-
-// Funcion de cargar productos (o no) cuando no hay productos en el HTML
-Productos.length > 0 ? cargarProductos(Productos) : contenedorProductos.innerHTML = errorCargaPase()
 
 
 //Buscador
@@ -74,5 +72,14 @@ function toast(mensaje, bgcolor) {
         }
     }).showToast();
 }
+
+function obtenerProductos() {
+    fetch(URL)
+    .then((response)=> response.json())
+    .then((data)=> Productos.push(...data))
+    .then(()=> cargarProductos(Productos))
+    .catch((error)=> contenedorProductos.innerHTML = errorCargaPase())
+}
+obtenerProductos()
 
 
